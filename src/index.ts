@@ -13,7 +13,7 @@ let videos = [{
     id: 1,
     title: "string",
     author: " string",
-    canBeDownloaded: false,
+    canBeDownloaded: true,
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
@@ -22,24 +22,25 @@ let videos = [{
     id: 2,
     title: "string",
     author: " string",
-    canBeDownloaded: false,
+    canBeDownloaded: true,
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
     availableResolutions: ['P144']
 }]
 
-const permissionVariants = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
+enum Resolutions {P144 ="P144", P240="P240", P360="P360", P480="P480", P720="P720", P1080="P1080", P1440="P1440", P2160="P2160"}
 
 app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 })
 
 app.post('/videos', (req: Request, res: Response) => {
+    const apiErrorResult: Object[] = [];
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
-    let apiErrorResult =[];
+
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
@@ -54,7 +55,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolutions && typeof availableResolutions !== 'string') {
+    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         apiErrorResult.push({
             "message": 'string',
             "field": "availableResolutions"
@@ -64,20 +65,20 @@ app.post('/videos', (req: Request, res: Response) => {
     if (apiErrorResult.length > 0) {
         res.status(400).send({errorMessage: apiErrorResult})
         return;
+    } else {
+        const newVideo = {
+            id: +(new Date()),
+            title: "string",
+            author: " string",
+            canBeDownloaded: false,
+            minAgeRestriction: null,
+            createdAt: new Date().toISOString(),
+            publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+            availableResolutions: ["P144"]
+        }
+        videos.push(newVideo)
+        res.sendStatus(201).send(newVideo)
     }
-
-    const newVideo = {
-        id: +(new Date()),
-        title: "string",
-        author: " string",
-        canBeDownloaded: false,
-        minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-        availableResolutions: ["P144"]
-    }
-    videos.push(newVideo)
-    res.sendStatus(201).send(newVideo)
 })
 
 app.get('/videos/:id', (req: Request, res: Response) => {
@@ -92,7 +93,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 app.put('/videos/:id', (req: Request, res: Response) => {
     const title = req.body.title;
     const author = req.body.author;
-    const availableResolution = req.body.availableResolutions;
+    const availableResolutions = req.body.availableResolutions;
     const canBeDownloaded = req.body.canBeDownloaded;
     const minAgeRestriction = req.body.minAgeRestriction;
     const publicationDate = req.body.publicationDate;
@@ -117,7 +118,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolution && typeof availableResolution !== 'string') {
+    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         res.sendStatus(400).send({
             errorMessage: [{
                 'message': "string",

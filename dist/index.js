@@ -13,7 +13,7 @@ let videos = [{
         id: 1,
         title: "string",
         author: " string",
-        canBeDownloaded: false,
+        canBeDownloaded: true,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
         publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
@@ -22,21 +22,31 @@ let videos = [{
         id: 2,
         title: "string",
         author: " string",
-        canBeDownloaded: false,
+        canBeDownloaded: true,
         minAgeRestriction: null,
         createdAt: new Date().toISOString(),
         publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
         availableResolutions: ['P144']
     }];
-const permissionVariants = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160'];
+var Resolutions;
+(function (Resolutions) {
+    Resolutions["P144"] = "P144";
+    Resolutions["P240"] = "P240";
+    Resolutions["P360"] = "P360";
+    Resolutions["P480"] = "P480";
+    Resolutions["P720"] = "P720";
+    Resolutions["P1080"] = "P1080";
+    Resolutions["P1440"] = "P1440";
+    Resolutions["P2160"] = "P2160";
+})(Resolutions || (Resolutions = {}));
 app.get('/videos', (req, res) => {
     res.send(videos);
 });
 app.post('/videos', (req, res) => {
+    const apiErrorResult = [];
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
-    let apiErrorResult = [];
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
         apiErrorResult.push({
             "message": 'string',
@@ -50,10 +60,10 @@ app.post('/videos', (req, res) => {
         });
         return;
     }
-    if (availableResolutions && typeof availableResolutions !== 'string') {
+    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         apiErrorResult.push({
             "message": 'string',
-            "field": "author"
+            "field": "availableResolutions"
         });
         return;
     }
@@ -61,18 +71,20 @@ app.post('/videos', (req, res) => {
         res.status(400).send({ errorMessage: apiErrorResult });
         return;
     }
-    const newVideo = {
-        id: +(new Date()),
-        title: "string",
-        author: " string",
-        canBeDownloaded: false,
-        minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-        availableResolutions: ["P144"]
-    };
-    videos.push(newVideo);
-    res.sendStatus(201).send(newVideo);
+    else {
+        const newVideo = {
+            id: +(new Date()),
+            title: "string",
+            author: " string",
+            canBeDownloaded: false,
+            minAgeRestriction: null,
+            createdAt: new Date().toISOString(),
+            publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+            availableResolutions: ["P144"]
+        };
+        videos.push(newVideo);
+        res.sendStatus(201).send(newVideo);
+    }
 });
 app.get('/videos/:id', (req, res) => {
     let video = videos.find(p => p.id === +req.params.id);
@@ -86,7 +98,7 @@ app.get('/videos/:id', (req, res) => {
 app.put('/videos/:id', (req, res) => {
     const title = req.body.title;
     const author = req.body.author;
-    const availableResolution = req.body.availableResolutions;
+    const availableResolutions = req.body.availableResolutions;
     const canBeDownloaded = req.body.canBeDownloaded;
     const minAgeRestriction = req.body.minAgeRestriction;
     const publicationDate = req.body.publicationDate;
@@ -110,7 +122,7 @@ app.put('/videos/:id', (req, res) => {
         });
         return;
     }
-    if (availableResolution && typeof availableResolution !== 'string') {
+    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         res.sendStatus(400).send({
             errorMessage: [{
                     'message': "string",
