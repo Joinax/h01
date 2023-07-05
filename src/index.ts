@@ -27,7 +27,7 @@ app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 })
 
-app.post('videos', (req: Request, res: Response) => {
+app.post('/videos', (req: Request, res: Response) => {
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
@@ -74,7 +74,7 @@ app.post('videos', (req: Request, res: Response) => {
     res.sendStatus(201).send(newVideo)
 })
 
-app.get('videos/:id', (req: Request, res: Response) => {
+app.get('/videos/:id', (req: Request, res: Response) => {
     let video = videos.find(p => p.id === +req.params.id)
     if (video) {
         res.sendStatus(200).send(video)
@@ -83,7 +83,7 @@ app.get('videos/:id', (req: Request, res: Response) => {
     }
 })
 
-app.put('videos/:id', (req: Request, res: Response) => {
+app.put('/videos/:id', (req: Request, res: Response) => {
     const title = req.body.title;
     const author = req.body.author;
     const availableResolution = req.body.availableResolutions;

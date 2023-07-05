@@ -33,7 +33,7 @@ let videos = [{
 app.get('/videos', (req, res) => {
     res.send(videos);
 });
-app.post('videos', (req, res) => {
+app.post('/videos', (req, res) => {
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
@@ -78,7 +78,7 @@ app.post('videos', (req, res) => {
     videos.push(newVideo);
     res.sendStatus(201).send(newVideo);
 });
-app.get('videos/:id', (req, res) => {
+app.get('/videos/:id', (req, res) => {
     let video = videos.find(p => p.id === +req.params.id);
     if (video) {
         res.sendStatus(200).send(video);
@@ -87,7 +87,7 @@ app.get('videos/:id', (req, res) => {
         res.sendStatus(404);
     }
 });
-app.put('videos/:id', (req, res) => {
+app.put('/videos/:id', (req, res) => {
     const title = req.body.title;
     const author = req.body.author;
     const availableResolution = req.body.availableResolutions;
@@ -114,7 +114,7 @@ app.put('videos/:id', (req, res) => {
         });
         return;
     }
-    if (availableResolution && typeof !availableResolution.every(r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolution && typeof availableResolution !== 'string') {
         res.sendStatus(400).send({
             errorMessage: [{
                     'message': "string",
