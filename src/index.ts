@@ -12,7 +12,7 @@ enum Resolutions {P144, P240, P360, P480, P720, P1080, P1440, P2160}
 let videos = [{
     id: 1,
     title: "string",
-    author: " string",
+    author: "string",
     canBeDownloaded: true,
     minAgeRestriction: null,
     createdAt: "2023-07-05T18:20:30.739Z",
@@ -21,7 +21,7 @@ let videos = [{
 }, {
     id: 2,
     title: "string",
-    author: " string",
+    author: "string",
     canBeDownloaded: true,
     minAgeRestriction: null,
     createdAt: "2023-07-05T18:20:30.739Z",
@@ -44,19 +44,19 @@ app.post('/videos', (req: Request, res: Response) => {
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "message": 'string',
+            "message": "string",
             "field": "title"
         })
     }
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20){
         apiErrorResult.push({
-            "message": 'string',
+            "message": "string",
             "field": "author"
         })
     }
     if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
         apiErrorResult.push({
-            "message": 'string',
+            "message": "string",
             "field": "availableResolutions"
         })
     }
@@ -102,38 +102,38 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "message": 'string',
-            "field": "author"
+            "message": "string",
+            "field": "title"
         })
     }
     if (!author || typeof author !== 'string' ||  !author.trim() || author.length > 20) {
         apiErrorResult.push({
-            "message": 'string',
+            "message": "string",
             "field": "author"
         })
     }
     if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
         apiErrorResult.push({
-            "message": 'string',
-            "field": "author"
+            "message": "string",
+            "field": "availableResolutions"
         })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
         apiErrorResult.push({
-            "message": 'string',
-            "field": "author"
+            "message": "string",
+            "field": "canBeDownloaded"
         })
     }
     if (typeof minAgeRestriction !== null || minAgeRestriction.length > 18 || minAgeRestriction.length < 1) {
         apiErrorResult.push({
-            "message": 'string',
-            "field": "author"
+            "message": "string",
+            "field": "minAgeRestriction"
         })
     }
     if (!publicationDate || typeof publicationDate !== 'string' ||  !publicationDate.trim()) {
         apiErrorResult.push({
-            "message": 'string',
-            "field": "author"
+            "message": "string",
+            "field": "publicationDate"
         })
     }
     if (apiErrorResult.length > 0) {
@@ -167,10 +167,6 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
     videos.length = 0
     res.sendStatus(204)
 })
-
-
-
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port: ${port}`)
