@@ -54,12 +54,7 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
-        apiErrorResult.push({
-            "message": "string",
-            "field": "availableResolutions"
-        })
-    }
+
     if (apiErrorResult.length > 0) {
         res.status(400).send({errorMessage: apiErrorResult})
     } else {
@@ -110,12 +105,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         apiErrorResult.push({
             "message": "string",
             "field": "author"
-        })
-    }
-    if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
-        apiErrorResult.push({
-            "message": "string",
-            "field": "availableResolutions"
         })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
