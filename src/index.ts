@@ -15,18 +15,18 @@ let videos = [{
     author: " string",
     canBeDownloaded: true,
     minAgeRestriction: null,
-    createdAt: new Date().toISOString(),
-    publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-    availableResolutions: ["P144"]
+    createdAt: "2023-07-05T18:20:30.739Z",
+    publicationDate: "2023-07-05T18:20:30.739Z",
+    availableResolutions: ['P144']
 }, {
     id: 2,
     title: "string",
     author: " string",
     canBeDownloaded: true,
     minAgeRestriction: null,
-    createdAt: new Date().toISOString(),
-    publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-    availableResolutions: ["P144"]
+    createdAt: "2023-07-05T18:20:30.739Z",
+    publicationDate: "2023-07-05T18:20:30.739Z",
+    availableResolutions: ['P144']
 }]
 
 
@@ -53,21 +53,29 @@ app.post('/videos', (req: Request, res: Response) => {
             "message": 'string',
             "field": "author"
         })
-        return;
+    }
+    if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "availableResolutions"
+        })
     }
     if (apiErrorResult.length > 0) {
         res.status(400).send({errorMessage: apiErrorResult})
-        return;
     } else {
+        const createdAt = new Date();
+        let publicationDate = new Date();
+        publicationDate.setDate(publicationDate.getDate() +1)
         const newVideo = {
             id: +(new Date()),
-            title: "string",
-            author: " string",
+            title,
+            author,
+            availableResolutions,
             canBeDownloaded: false,
             minAgeRestriction: null,
-            createdAt: new Date().toISOString(),
-            publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-            availableResolutions: ["P144"]
+            createdAt: createdAt.toISOString(),
+            publicationDate: publicationDate.toISOString(),
+
         }
         videos.push(newVideo)
         res.sendStatus(201).send(newVideo)
@@ -84,6 +92,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 app.put('/videos/:id', (req: Request, res: Response) => {
+    const apiErrorResult: Object[] = [];
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
@@ -92,65 +101,56 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     const publicationDate = req.body.publicationDate;
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "title"
-            }],
-            resultCode: 1
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
-        return;
     }
     if (!author || typeof author !== 'string' ||  !author.trim() || author.length > 20) {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "author"
-            }],
-            resultCode: 1
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
-        return;
+    }
+    if (availableResolutions && availableResolutions.every(r => Object(Resolutions).includes(r))){
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
+        })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "canBeDownloaded"
-            }],
-            resultCode: 1
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
-        return;
     }
     if (typeof minAgeRestriction !== null || minAgeRestriction.length > 18 || minAgeRestriction.length < 1) {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "minAgeRestriction"
-            }],
-            resultCode: 1
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
-        return
     }
     if (!publicationDate || typeof publicationDate !== 'string' ||  !publicationDate.trim()) {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "publicationDate"
-            }],
-            resultCode: 1
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
-        return;
     }
-
-    const id = +req.params.id;
-    const video = videos.find(p => p.id === id)
-    if (video) {
-        video.title = title
-        res.sendStatus(204).send(video)
-    } else{
-        res.sendStatus(404)
-    }
-})
+    if (apiErrorResult.length > 0) {
+        res.status(400).send({errorMessage: apiErrorResult})
+    } else {
+        let video = videos.find(p => p.id === +req.params.id)
+        if (video) {
+            video.title = title;
+            video.author = author;
+            video.availableResolutions = availableResolutions;
+            video.minAgeRestriction = minAgeRestriction;
+            video.publicationDate = publicationDate;
+            res.sendStatus(204).send(video)
+        } else{
+            res.sendStatus(404)
+        }
+}})
 
 app.delete('/videos/:id', (req: Request, res: Response) => {
     for (let i=0; i<videos.length; i++){
