@@ -111,7 +111,7 @@ app.put('videos/:id', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolution && typeof !availableResolution.every( r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolution && typeof availableResolution !== 'string') {
         res.sendStatus(400).send({
             errorMessage: [{
                 'message': "string",
