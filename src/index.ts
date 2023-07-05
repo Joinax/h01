@@ -9,10 +9,17 @@ const port = process.env.PORT || 5000
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
 
-enum Resolutions { P144="P144", P240="P240", P360="P360", P480="P480", P720="P720", P1080="P1080", P1440="P1440", P2160="P2160"}
-
 let videos = [{
-    id: 0,
+    id: 1,
+    title: "string",
+    author: " string",
+    canBeDownloaded: false,
+    minAgeRestriction: null,
+    createdAt: new Date().toISOString(),
+    publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+    availableResolutions: ['P144']
+}, {
+    id: 2,
     title: "string",
     author: " string",
     canBeDownloaded: false,
@@ -22,6 +29,7 @@ let videos = [{
     availableResolutions: ['P144']
 }]
 
+const permissionVariants = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
 
 app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
@@ -45,13 +53,10 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolutions && typeof !availableResolutions !== 'string') {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "availableResolution"
-            }],
-            resultCode: 1
+    if (availableResolutions && typeof availableResolutions !== 'string') {
+        apiErrorResult.push({
+            "message": 'string',
+            "field": "author"
         })
         return;
     }
@@ -77,7 +82,7 @@ app.post('/videos', (req: Request, res: Response) => {
 app.get('/videos/:id', (req: Request, res: Response) => {
     let video = videos.find(p => p.id === +req.params.id)
     if (video) {
-        res.sendStatus(200).send(video)
+        res.send(200).send(video)
     } else {
         res.sendStatus(404)
     }
