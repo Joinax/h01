@@ -55,7 +55,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolutions !== undefined) {
         apiErrorResult.push({
             "message": 'string',
             "field": "availableResolutions"
@@ -118,7 +118,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
         return;
     }
-    if (availableResolutions && typeof availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolutions !== undefined) {
         res.sendStatus(400).send({
             errorMessage: [{
                 'message': "string",
