@@ -45,7 +45,8 @@ app.post('/videos', (req: Request, res: Response) => {
         apiErrorResult.push({
             "message": 'string',
             "field": "title"
-        })}
+        })
+    }
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20){
         apiErrorResult.push({
             "message": 'string',
@@ -56,7 +57,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (availableResolutions && typeof availableResolutions !== 'string') {
         apiErrorResult.push({
             "message": 'string',
-            "field": "author"
+            "field": "availableResolutions"
         })
         return;
     }
@@ -156,7 +157,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
         return;
     }
-
 
     const id = +req.params.id;
     const video = videos.find(p => p.id === id)
