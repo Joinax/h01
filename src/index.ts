@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000
 
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
-
+enum Resolutions {P144, P240, P360, P480, P720, P1080, P1440, P2160}
 let videos = [{
     id: 1,
     title: "string",
@@ -17,7 +17,7 @@ let videos = [{
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-    availableResolutions: ['P144']
+    availableResolutions: ["P144"]
 }, {
     id: 2,
     title: "string",
@@ -26,10 +26,10 @@ let videos = [{
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-    availableResolutions: ['P144']
+    availableResolutions: ["P144"]
 }]
 
-enum Resolutions {P144 ="P144", P240="P240", P360="P360", P480="P480", P720="P720", P1080="P1080", P1440="P1440", P2160="P2160"}
+
 
 app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
@@ -52,13 +52,6 @@ app.post('/videos', (req: Request, res: Response) => {
         apiErrorResult.push({
             "message": 'string',
             "field": "author"
-        })
-        return;
-    }
-    if (availableResolutions !== undefined) {
-        apiErrorResult.push({
-            "message": 'string',
-            "field": "availableResolutions"
         })
         return;
     }
@@ -113,16 +106,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             errorMessage: [{
                 'message': "string",
                 'field': "author"
-            }],
-            resultCode: 1
-        })
-        return;
-    }
-    if (availableResolutions !== undefined) {
-        res.sendStatus(400).send({
-            errorMessage: [{
-                'message': "string",
-                'field': "availableResolution"
             }],
             resultCode: 1
         })
