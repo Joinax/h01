@@ -79,7 +79,6 @@ app.post('/videos', (req: Request, res: Response) => {
         }
         videos.push(newVideo)
         res.sendStatus(201).send(newVideo)
-        return;
     }
 })
 
