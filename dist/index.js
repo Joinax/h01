@@ -115,7 +115,7 @@ app.put('/videos/:id', (req, res) => {
             "field": "author"
         });
     }
-    if (availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r)) || typeof availableResolutions !== 'string') {
+    if (availableResolutions && availableResolutions.every(r => Object.keys(Resolutions).includes(r)) || typeof availableResolutions !== 'string') {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
