@@ -59,7 +59,7 @@ app.post('/videos', (req, res) => {
             "field": "author"
         });
     }
-    if (!availableResolutions && typeof availableResolutions !== undefined && availableResolutions !== 'string') {
+    if (availableResolutions) {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -115,7 +115,7 @@ app.put('/videos/:id', (req, res) => {
             "field": "author"
         });
     }
-    if (!availableResolutions && typeof availableResolutions !== undefined && availableResolutions !== 'string') {
+    if (availableResolutions) {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
