@@ -54,7 +54,7 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r)) || typeof availableResolutions !== undefined){
+    if(availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -112,6 +112,12 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "author"
         })
     }
+    if(availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))){
+        apiErrorResult.push({
+            "message": "string",
+            "field": "availableResolutions"
+        })
+    }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
         apiErrorResult.push({
             "message": "string",
@@ -130,7 +136,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "publicationDate"
         })
     }
-    if (apiErrorResult.length > 0) {
+    if (apiErrorResult.length != 0) {
         res.status(400).send({errorMessage: apiErrorResult})
     } else {
         let video = videos.find(p => p.id === +req.params.id)
