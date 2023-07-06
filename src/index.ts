@@ -54,7 +54,7 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(!availableResolutions && typeof availableResolutions !== undefined){
+    if(!availableResolutions && typeof availableResolutions !== undefined && availableResolutions !== 'string'){
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -112,7 +112,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(!availableResolutions && typeof availableResolutions !== undefined){
+    if(!availableResolutions && typeof availableResolutions !== undefined && availableResolutions !== 'string'){
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -124,7 +124,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "canBeDownloaded"
         })
     }
-    if (typeof minAgeRestriction !== null || minAgeRestriction.length > 18 || minAgeRestriction.length < 1) {
+    if (typeof minAgeRestriction || minAgeRestriction.length > 18 || minAgeRestriction.length < 1) {
         apiErrorResult.push({
             "message": "string",
             "field": "minAgeRestriction"
