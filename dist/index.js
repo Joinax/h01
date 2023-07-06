@@ -84,7 +84,6 @@ app.post('/videos', (req, res) => {
         };
         videos.push(newVideo);
         res.sendStatus(201).send(newVideo);
-        return;
     }
 });
 app.get('/videos/:id', (req, res) => {
@@ -116,7 +115,7 @@ app.put('/videos/:id', (req, res) => {
             "field": "author"
         });
     }
-    if (availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r)) || typeof availableResolutions !== 'string') {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
