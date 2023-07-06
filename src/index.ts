@@ -8,8 +8,8 @@ const port = process.env.PORT || 5000
 
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
-enum Resolutions {P144, P240, P360, P480, P720, P1080, P1440, P2160}
-let videos = [{
+enum Resolutions {P144="P144", P240="P240", P360="P360", P480="P480", P720="P720", P1080="P1080", P1440="P1440", P2160="P2160"}
+const videos = [{
     id: 1,
     title: "string",
     author: "string",
@@ -48,16 +48,16 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "title"
         })
     }
-    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20){
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
         apiErrorResult.push({
             "message": "string",
             "field": "author"
         })
     }
-    if(!availableResolutions || typeof availableResolutions !== null){
+    if(!availableResolutions && typeof availableResolutions !== undefined){
         apiErrorResult.push({
             "message": "string",
-            "field": "author"
+            "field": "availableResolutions"
         })
     }
     if (apiErrorResult.length > 0) {
@@ -85,7 +85,7 @@ app.post('/videos', (req: Request, res: Response) => {
 app.get('/videos/:id', (req: Request, res: Response) => {
     let video = videos.find(p => p.id === +req.params.id)
     if (video) {
-        res.send(200).send(video)
+        res.sendStatus(200).send(video)
     } else {
         res.sendStatus(404)
     }
@@ -112,10 +112,10 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(!availableResolutions || typeof availableResolutions !== null){
+    if(!availableResolutions && typeof availableResolutions !== undefined){
         apiErrorResult.push({
             "message": "string",
-            "field": "author"
+            "field": "availableResolutions"
         })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {

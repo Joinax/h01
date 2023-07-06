@@ -11,16 +11,16 @@ const parserMiddleware = (0, body_parser_1.default)({});
 app.use(parserMiddleware);
 var Resolutions;
 (function (Resolutions) {
-    Resolutions[Resolutions["P144"] = 0] = "P144";
-    Resolutions[Resolutions["P240"] = 1] = "P240";
-    Resolutions[Resolutions["P360"] = 2] = "P360";
-    Resolutions[Resolutions["P480"] = 3] = "P480";
-    Resolutions[Resolutions["P720"] = 4] = "P720";
-    Resolutions[Resolutions["P1080"] = 5] = "P1080";
-    Resolutions[Resolutions["P1440"] = 6] = "P1440";
-    Resolutions[Resolutions["P2160"] = 7] = "P2160";
+    Resolutions["P144"] = "P144";
+    Resolutions["P240"] = "P240";
+    Resolutions["P360"] = "P360";
+    Resolutions["P480"] = "P480";
+    Resolutions["P720"] = "P720";
+    Resolutions["P1080"] = "P1080";
+    Resolutions["P1440"] = "P1440";
+    Resolutions["P2160"] = "P2160";
 })(Resolutions || (Resolutions = {}));
-let videos = [{
+const videos = [{
         id: 1,
         title: "string",
         author: "string",
@@ -59,10 +59,10 @@ app.post('/videos', (req, res) => {
             "field": "author"
         });
     }
-    if (!availableResolutions || typeof availableResolutions !== null) {
+    if (!availableResolutions && typeof availableResolutions !== undefined) {
         apiErrorResult.push({
             "message": "string",
-            "field": "author"
+            "field": "availableResolutions"
         });
     }
     if (apiErrorResult.length > 0) {
@@ -89,7 +89,7 @@ app.post('/videos', (req, res) => {
 app.get('/videos/:id', (req, res) => {
     let video = videos.find(p => p.id === +req.params.id);
     if (video) {
-        res.send(200).send(video);
+        res.sendStatus(200).send(video);
     }
     else {
         res.sendStatus(404);
@@ -115,10 +115,10 @@ app.put('/videos/:id', (req, res) => {
             "field": "author"
         });
     }
-    if (!availableResolutions || typeof availableResolutions !== null) {
+    if (!availableResolutions && typeof availableResolutions !== undefined) {
         apiErrorResult.push({
             "message": "string",
-            "field": "author"
+            "field": "availableResolutions"
         });
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
