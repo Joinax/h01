@@ -59,7 +59,7 @@ app.post('/videos', (req, res) => {
             "field": "author"
         });
     }
-    if (!availableResolutions || !availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
+    if (availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
