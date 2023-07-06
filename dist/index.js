@@ -59,13 +59,13 @@ app.post('/videos', (req, res) => {
             "field": "author"
         });
     }
-    if (availableResolutions) {
+    if (!availableResolutions || !availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
         });
     }
-    if (apiErrorResult.length > 0) {
+    if (apiErrorResult.length != 0) {
         res.status(400).send({ errorMessage: apiErrorResult });
     }
     else {
@@ -113,12 +113,6 @@ app.put('/videos/:id', (req, res) => {
         apiErrorResult.push({
             "message": "string",
             "field": "author"
-        });
-    }
-    if (availableResolutions) {
-        apiErrorResult.push({
-            "message": "string",
-            "field": "availableResolutions"
         });
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
