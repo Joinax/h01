@@ -54,7 +54,12 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-
+    if(!availableResolutions || typeof availableResolutions !== null){
+        apiErrorResult.push({
+            "message": "string",
+            "field": "author"
+        })
+    }
     if (apiErrorResult.length > 0) {
         res.status(400).send({errorMessage: apiErrorResult})
     } else {
@@ -102,6 +107,12 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
     }
     if (!author || typeof author !== 'string' ||  !author.trim() || author.length > 20) {
+        apiErrorResult.push({
+            "message": "string",
+            "field": "author"
+        })
+    }
+    if(!availableResolutions || typeof availableResolutions !== null){
         apiErrorResult.push({
             "message": "string",
             "field": "author"
