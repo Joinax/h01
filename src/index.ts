@@ -59,7 +59,7 @@ app.post('/videos', (req: Request, res: Response) => {
         })
     }
     if (apiErrorResult.length > 0) {
-        res.status(400).send({errorMessages: apiErrorResult})
+        res.status(400).send({errorsMessages: apiErrorResult})
     } else {
         const createdAt = new Date();
         let publicationDate = new Date();
@@ -134,7 +134,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
     }
     if (apiErrorResult.length != 0) {
-        res.status(400).send({errorMessages: apiErrorResult})
+        res.status(400).send({errorsMessages: apiErrorResult})
     } else {
         let video = videos.find(p => p.id === +req.params.id)
         if (video) {
