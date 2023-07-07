@@ -58,7 +58,7 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "availableResolutions"
         })
     }
-    if (apiErrorResult.length != 0) {
+    if (apiErrorResult.length > 0) {
         res.status(400).send({errorMessage: apiErrorResult})
     } else {
         const createdAt = new Date();
