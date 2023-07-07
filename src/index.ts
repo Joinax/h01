@@ -42,19 +42,19 @@ app.post('/videos', (req: Request, res: Response) => {
     const availableResolutions = req.body.availableResolutions;
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            message: "string",
-            field: "title"
+            "messages": "string",
+            "field": "title"
         })
     }
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "author"
         })
     }
     if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "availableResolutions"
         })
     }
@@ -99,37 +99,37 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "title"
         })
     }
     if (!author || typeof author !== 'string' ||  !author.trim() || author.length > 20) {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "author"
         })
     }
     if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "availableResolutions"
         })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "canBeDownloaded"
         })
     }
     if (typeof minAgeRestriction !== "number" || minAgeRestriction > 18 || minAgeRestriction < 1) {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "minAgeRestriction"
         })
     }
     if (!publicationDate || typeof publicationDate !== 'string' ||  !publicationDate.trim()) {
         apiErrorResult.push({
-            "message": "string",
+            "messages": "string",
             "field": "publicationDate"
         })
     }
