@@ -73,7 +73,7 @@ app.post('/videos', (req: Request, res: Response) => {
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
             publicationDate: publicationDate.toISOString(),
-            availableResolutions,
+            availableResolutions: availableResolutions,
         }
         videos.push(newVideo)
         res.sendStatus(201).send(newVideo)
