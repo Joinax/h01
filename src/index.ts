@@ -42,8 +42,8 @@ app.post('/videos', (req: Request, res: Response) => {
     const availableResolutions = req.body.availableResolutions;
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "message": "string",
-            "field": "title"
+            message: "string",
+            field: "title"
         })
     }
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
