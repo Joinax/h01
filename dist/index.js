@@ -74,13 +74,13 @@ app.post('/videos', (req, res) => {
         publicationDate.setDate(publicationDate.getDate() + 1);
         const newVideo = {
             id: +(new Date()),
-            title: title.toString(),
-            author: author.toString(),
-            availableResolutions: availableResolutions.toString(),
-            canBeDownloaded: false,
+            title,
+            author,
+            canBeDownloaded: true,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
             publicationDate: publicationDate.toISOString(),
+            availableResolutions,
         };
         videos.push(newVideo);
         res.sendStatus(201).send(newVideo);
