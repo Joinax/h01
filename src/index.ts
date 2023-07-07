@@ -67,8 +67,8 @@ app.post('/videos', (req: Request, res: Response) => {
         publicationDate.setDate(publicationDate.getDate() +1)
         const newVideo = {
             id: +(new Date()),
-            title: title,
-            author: author,
+            title: title.toString(),
+            author: author.toString(),
             availableResolutions: availableResolutions.toString(),
             canBeDownloaded: false,
             minAgeRestriction: null,
