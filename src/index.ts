@@ -13,7 +13,7 @@ let videos = [{
     id: 1,
     title: "string",
     author: "string",
-    canBeDownloaded: true,
+    canBeDownloaded: false,
     minAgeRestriction: null,
     createdAt: "2023-07-05T18:20:30.739Z",
     publicationDate: "2023-07-05T18:20:30.739Z",
@@ -22,7 +22,7 @@ let videos = [{
     id: 2,
     title: "string",
     author: "string",
-    canBeDownloaded: true,
+    canBeDownloaded: false,
     minAgeRestriction: null,
     createdAt: "2023-07-05T18:20:30.739Z",
     publicationDate: "2023-07-05T18:20:30.739Z",
@@ -141,6 +141,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             video.title = title;
             video.author = author;
             video.availableResolutions = availableResolutions;
+            video.canBeDownloaded = canBeDownloaded;
             video.minAgeRestriction = minAgeRestriction;
             video.publicationDate = publicationDate;
             res.status(204).send(video)
