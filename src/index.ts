@@ -40,7 +40,6 @@ app.post('/videos', (req: Request, res: Response) => {
     const title = req.body.title;
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
-
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
             "message": "string",
@@ -69,7 +68,7 @@ app.post('/videos', (req: Request, res: Response) => {
             id: +(new Date()),
             title,
             author,
-            canBeDownloaded: true,
+            canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
             publicationDate: publicationDate.toISOString(),
