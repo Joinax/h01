@@ -121,7 +121,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "canBeDownloaded"
         })
     }
-    if (typeof minAgeRestriction || minAgeRestriction.length > 18 || minAgeRestriction.length < 1) {
+    if (typeof minAgeRestriction !== "number" || minAgeRestriction > 18 || minAgeRestriction < 1) {
         apiErrorResult.push({
             "message": "string",
             "field": "minAgeRestriction"
