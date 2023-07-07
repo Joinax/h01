@@ -42,24 +42,24 @@ app.post('/videos', (req: Request, res: Response) => {
     const availableResolutions = req.body.availableResolutions;
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "title"
         })
     }
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "author"
         })
     }
     if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "availableResolutions"
         })
     }
     if (apiErrorResult.length > 0) {
-        res.status(400).send({errorMessage: apiErrorResult})
+        res.status(400).send({errorMessages: apiErrorResult})
     } else {
         const createdAt = new Date();
         let publicationDate = new Date();
@@ -99,42 +99,42 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "title"
         })
     }
     if (!author || typeof author !== 'string' ||  !author.trim() || author.length > 20) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "author"
         })
     }
     if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "availableResolutions"
         })
     }
     if (typeof canBeDownloaded !== undefined && typeof canBeDownloaded !== 'boolean') {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "canBeDownloaded"
         })
     }
     if (typeof minAgeRestriction !== "number" || minAgeRestriction > 18 || minAgeRestriction < 1) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "minAgeRestriction"
         })
     }
     if (!publicationDate || typeof publicationDate !== 'string' ||  !publicationDate.trim()) {
         apiErrorResult.push({
-            "messages": "string",
+            "message": "string",
             "field": "publicationDate"
         })
     }
     if (apiErrorResult.length != 0) {
-        res.status(400).send({errorMessage: apiErrorResult})
+        res.status(400).send({errorMessages: apiErrorResult})
     } else {
         let video = videos.find(p => p.id === +req.params.id)
         if (video) {
