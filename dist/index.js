@@ -20,7 +20,7 @@ var Resolutions;
     Resolutions["P1440"] = "P1440";
     Resolutions["P2160"] = "P2160";
 })(Resolutions || (Resolutions = {}));
-const videos = [{
+let videos = [{
         id: 1,
         title: "string",
         author: "string",
@@ -76,7 +76,7 @@ app.post('/videos', (req, res) => {
             id: +(new Date()),
             title,
             author,
-            availableResolutions,
+            availableResolutions: availableResolutions.toString(),
             canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
@@ -115,7 +115,7 @@ app.put('/videos/:id', (req, res) => {
             "field": "author"
         });
     }
-    if (availableResolutions && availableResolutions.every(r => Object.keys(Resolutions).includes(r)) || typeof availableResolutions !== 'string') {
+    if (availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))) {
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"

@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
 enum Resolutions {P144="P144", P240="P240", P360="P360", P480="P480", P720="P720", P1080="P1080", P1440="P1440", P2160="P2160"}
-const videos = [{
+let videos = [{
     id: 1,
     title: "string",
     author: "string",
@@ -41,7 +41,6 @@ app.post('/videos', (req: Request, res: Response) => {
     const author = req.body.author;
     const availableResolutions = req.body.availableResolutions;
 
-
     if (!title || typeof title !== 'string' ||  !title.trim() || title.length > 40) {
         apiErrorResult.push({
             "message": "string",
@@ -70,7 +69,7 @@ app.post('/videos', (req: Request, res: Response) => {
             id: +(new Date()),
             title,
             author,
-            availableResolutions,
+            availableResolutions: availableResolutions.toString(),
             canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
