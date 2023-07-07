@@ -53,7 +53,7 @@ app.post('/videos', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))){
+    if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -76,14 +76,14 @@ app.post('/videos', (req: Request, res: Response) => {
             availableResolutions: availableResolutions,
         }
         videos.push(newVideo)
-        res.sendStatus(201).send(newVideo)
+        res.status(201).send(newVideo)
     }
 })
 
 app.get('/videos/:id', (req: Request, res: Response) => {
     let video = videos.find(p => p.id === +req.params.id)
     if (video) {
-        res.sendStatus(200).send(video)
+        res.status(200).send(video)
     } else {
         res.sendStatus(404)
     }
@@ -110,7 +110,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             "field": "author"
         })
     }
-    if(availableResolutions && !availableResolutions.every(r => Object.keys(Resolutions).includes(r))){
+    if(availableResolutions && !availableResolutions.every((r: string) => Object.keys(Resolutions).includes(r))){
         apiErrorResult.push({
             "message": "string",
             "field": "availableResolutions"
@@ -144,7 +144,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             video.availableResolutions = availableResolutions;
             video.minAgeRestriction = minAgeRestriction;
             video.publicationDate = publicationDate;
-            res.sendStatus(204).send(video)
+            res.status(204).send(video)
         } else{
             res.sendStatus(404)
         }
